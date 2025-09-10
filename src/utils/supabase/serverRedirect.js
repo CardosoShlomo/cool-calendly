@@ -5,8 +5,11 @@ export async function getConfirmedUser() {
   const supabase = await getServerClient();
   const { data: { user }, error } = await supabase.auth.getUser();
 
+  console.log("error", error);
+
   if (error || !user) return null;
 
+  console.log("user", user);
   // Only return user if email is confirmed
   if (!user.confirmed_at) return null;
 
@@ -22,7 +25,7 @@ export async function requireNoAuth() {
 export async function requireAuth() {
   const user = await getConfirmedUser();
   if (!user) {
-    redirect("/login");
+    // redirect("/login");
   }
   return user;
 }
