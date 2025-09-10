@@ -1,7 +1,7 @@
 'use client'
 
-import Cursor from '@/components/cursors/Cursor';
-import MainCursor from '@/components/cursors/MainCursor';
+import Cursor from '@/components/Cursor';
+import MainCursor from '@/components/MainCursor';
 import { createContext, useContext, useState } from 'react';
 import { BrowserView } from 'react-device-detect';
 import { DepthContext } from './DepthContext';
@@ -31,16 +31,12 @@ export function CursorProvider({ children }) {
     setMaxDepth(prev => Math.max(depth, prev));
   }
 
-  console.log('cursors', maxDepth, cursors.map((e) => e?.rect));
-
   return (
     <CursorContext.Provider value={{ addCursor, updateCursor, removeCursor, registerDepth }}>
       <DepthContext.Provider value={0}>
         <BrowserView>
           {Array.from({ length: maxDepth }).map((_, i) => <Cursor key={i} index={i} count={cursors.length} maxDepth={maxDepth} data={cursors[i]}/>)}
-          {/* {cursors.map((e, i) => <Cursor key={i} index={i} count={layers} data={e}/>)}
-          {cursors.length < layers ? <Cursor key={cursors.length} index={cursors.length} count={layers} /> : <></>} */}
-          <MainCursor background={cursors.length%2 != 0 ? '#0003' : '#F3904F44'} />
+          <MainCursor secondary={cursors.length%2 == 0} />
         </BrowserView>
         {children}
       </DepthContext.Provider>

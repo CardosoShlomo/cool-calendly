@@ -11,16 +11,18 @@ export default function Cursor({ index, count, maxDepth, data }) {
     previous.current = next.current;
     next.current = data;
   }, [data]);
-
-  useEffect(() => {
-    cursor.current.style.opacity = count >= index ? 1 : 0;
-  }, [count]);
   
   const radiusValues = useRef([]);
 
   const mouse = useRef({x: 0, y: 0});
 
   const animation = useRef();
+
+  useEffect(() => {
+    if (animation.current) {
+      cursor.current.style.opacity = count >= index ? 1 : 0;
+    }
+  }, [count]);
 
   const run = () => animation.current = requestAnimationFrame(animate);
   const stop = () => {
@@ -63,8 +65,8 @@ export default function Cursor({ index, count, maxDepth, data }) {
     cursor.current.style.height = height + 'px';
 
     let radiusString = '';
-    if (data) {
-      const obj = data.borderRadius;
+    if (next.current) {
+      const obj = next.current.borderRadius;
       obj.values.forEach((e, i) => {
         if (!radiusValues.current[i]) {
           radiusValues.current[i] = 1;
@@ -115,8 +117,8 @@ export default function Cursor({ index, count, maxDepth, data }) {
       }
     }
     const mouseLeaveEvent = () => {
-      cursor.current.style.opacity = 0;
       stop();
+      cursor.current.style.opacity = 0;
     }
 
     document.addEventListener("mouseenter", mouseEnterEvent);

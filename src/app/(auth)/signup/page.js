@@ -1,15 +1,20 @@
+import AuthAppbar from "@/app/(auth)/AuthAppbar";
 import { requireNoAuth } from "@/utils/supabase/serverRedirect";
+import LoginForm from "../LoginForm";
+import { supabase } from "@/utils/supabase/browser";
+import LinkButton from "@/components/LinkButton";
 
 export default async function SignupPage() {
   await requireNoAuth();
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form>
-        <input type="email" placeholder="Email" required />
-        <button type="submit">Send Magic Link</button>
-      </form>
-    </div>
+    <>
+      <AuthAppbar>
+        <LinkButton href="/login">login</LinkButton>
+      </AuthAppbar>
+      <br/>
+      <br/>
+      <LoginForm>Sign Up</LoginForm>
+    </>
   );
 }

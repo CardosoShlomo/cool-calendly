@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 
-export default function MainCursor({ background }) {
+export default function MainCursor({ secondary }) {
   const cursor = useRef();
 
   useEffect(() => {
@@ -35,11 +35,11 @@ export default function MainCursor({ background }) {
       style={{
         position: "fixed",
         pointerEvents: "none",
-        width: "10px",
-        height: "10px",
-        borderRadius: "3px",
-        background: background,
-        border: "1px solid #fff",
+        width: 8,
+        height: 8,
+        background: secondary ? 'linear-gradient(45deg, #3B437130, #F3904F30)' : '#fff3',
+        border: "1px solid " + (secondary ? "transparent" : "#fff"),
+        borderImage: secondary ? "linear-gradient(45deg, #3B4371, #F3904F) 1" : "none",
         zIndex: 10,
         boxShadow: "10px 10px 60px -8px #0003",
         transition: "opacity 0.3s",

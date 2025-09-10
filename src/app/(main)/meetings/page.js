@@ -1,11 +1,15 @@
-import { requireAuth } from "@/utils/supabase/serverRedirect";
+import Container from "@/components/Container";
 
-export default async function MeetingsPage() {
-  const session = await requireAuth();
+export default function MeetingsPage() {
   return (
-    <div>
-      <h1>Meetings</h1>
-      <p>List of your upcoming and past meetings.</p>
-    </div>
+    <>
+      <br/>
+      <br/>
+      <br/>
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", padding: 20 }}>
+        <h1 style={{ margin: 0 }}>Meetings</h1>
+      </div>
+      <Container style={{ height: "100%" }}></Container>
+    </>
   );
 }

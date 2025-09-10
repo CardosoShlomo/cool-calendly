@@ -31,11 +31,13 @@ export async function getMeetings(userId) {
   return data;
 }
 
-export async function getMeetingTypes(userId) {
+export async function getMeetingTypes() {
+  const { data: { user } } = await supabase.auth.getUser();
   const { data, error } = await supabase
     .from('meeting_type')
     .select('*')
-    .eq('user_id', userId);
+    .eq('user_id', user.id);
+  console.log(error);
   if (error) throw error;
   return data;
 }

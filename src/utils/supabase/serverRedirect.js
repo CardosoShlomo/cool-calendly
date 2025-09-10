@@ -1,23 +1,26 @@
 import { redirect } from "next/navigation";
 import { getServerClient } from "./server";
 
-export async function getUser() {
+export async function getConfirmedUser() {
   const supabase = await getServerClient();
-  console.log('befor');
-  console.log(supabase.auth.getUser());
-  console.log('after');
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user }, error } = await supabase.auth.getUser();
+
+  if (error || !user) return null;
+
+  // Only return user if email is confirmed
+  if (!user.email_confirmed_at) return null;
+
   return user;
 }
 
 export async function requireNoAuth() {
-  if (await getUser()) {
+  if (await getConfirmedUser()) {
     redirect("/scheduling");
   }
 }
 
 export async function requireAuth() {
-  const user = await getUser();
+  const user = await getConfirmedUser();
   if (!user) {
     redirect("/login");
   }

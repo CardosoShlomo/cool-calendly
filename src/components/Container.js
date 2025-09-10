@@ -1,18 +1,18 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useCursor } from '../../context/CursorContext';
 import { DepthContext, useDepth } from '@/context/DepthContext';
+import { useCursor } from '@/context/CursorContext';
 
-export default function Container({ children, cursorType = 'pointer', className, style, triggerCursorUpdate }) {
+/**
+ * @param {{ children: React.ReactNode, style?: React.CSSProperties, onClick?: MouseEventHandler<T> }} props
+ */
+export default function Container({ children, cursorType = 'pointer', className, style, triggerCursorUpdate, onClick }) {
   const container = useRef();
 
-  const { addCursor, updateCursor, removeCursor, registerDepth } = useCursor();
-
   const myDepth = useDepth() + 1;
-  useEffect(() => {
-    registerDepth(myDepth);
-  }, []);
+
+  const { addCursor, updateCursor, removeCursor, registerDepth } = useCursor();
 
   const [color, setColor] = useState('inherit');
 
@@ -50,12 +50,18 @@ export default function Container({ children, cursorType = 'pointer', className,
     }
   }, [triggerCursorUpdate]);
 
+  useEffect(() => {
+    registerDepth(myDepth);
+    return handleMouseLeave;
+  }, []);
+
   return (
     <div
       ref={container}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={className}
+      onClick={onClick}
       style={{
         color: color,
         ...style,

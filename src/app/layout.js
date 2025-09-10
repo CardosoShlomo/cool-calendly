@@ -1,6 +1,8 @@
 import { CursorProvider } from "@/context/CursorContext";
 import React from "react";
 
+import "./globals.css";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" style={{background: "transparent"}}>
@@ -12,7 +14,7 @@ export default function RootLayout({ children }) {
           justifyContent: "center",
           alignItems: "center",
           margin: 0,
-          padding: 10,
+          padding: 0,
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           background: "transparent",
