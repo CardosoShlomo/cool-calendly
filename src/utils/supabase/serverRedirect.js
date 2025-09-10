@@ -8,7 +8,7 @@ export async function getConfirmedUser() {
   if (error || !user) return null;
 
   // Only return user if email is confirmed
-  if (!user.email_confirmed_at) return null;
+  if (!user.confirmed_at) return null;
 
   return user;
 }
