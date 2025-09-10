@@ -32,7 +32,8 @@ export default forwardRef(function TextField(
   },
   ref
 ) {
-  const internalRef = ref || useRef();
+  const internalRef = useRef();
+  const r = ref || internalRef;
 
   return (
     <Container
@@ -46,10 +47,10 @@ export default forwardRef(function TextField(
         position: "relative", // needed for icon positioning
         ...style,
       }}
-      onClick={() => internalRef.current && internalRef.current.focus()}
+      onClick={() => r.current && r.current.focus()}
     >
       <input
-        ref={internalRef}
+        ref={r}
         type={type}
         name={type}
         placeholder={placeholder}
